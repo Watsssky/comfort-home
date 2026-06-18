@@ -54,6 +54,7 @@
             display: flex;
             list-style: none;
             gap: 25px;
+            align-items: center;
         }
         nav ul li a {
             text-decoration: none;
@@ -761,6 +762,25 @@
             .transactions-table th, .transactions-table td { padding: 8px 10px; }
             .product-edit-card { flex-direction: column; text-align: center; }
         }
+        .vk-icon-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: #2787f5;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+            margin-left: 5px;
+        }
+        .vk-icon-link:hover {
+            background: #1e6bc4;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -775,6 +795,7 @@
                         <li><a id="news-link">Новости и акции</a></li>
                         <li><a id="contacts-link">Контакты</a></li>
                         <li><a id="admin-link" style="display: none;">👑 Админ панель</a></li>
+                        <li><a href="vk.html" class="vk-icon-link" id="admin-posts-link" style="display: none;" title="Посты VK">ВК</a></li>
                     </ul>
                 </nav>
                 <div class="header-icons">
@@ -1376,12 +1397,13 @@
         }
         
         function updateUI() {
-            const unauthDiv = document.getElementById('unauth-buttons'); const userInfoDiv = document.getElementById('user-info-header'); const avatar = document.getElementById('user-avatar-small'); const userName = document.getElementById('user-name-small'); const profileDiv = document.getElementById('user-profile'); const authFormDiv = document.getElementById('auth-form'); const profileAvatar = document.getElementById('profile-avatar'); const profileDetails = document.getElementById('profile-details'); const authTitle = document.getElementById('auth-title'); const adminLink = document.getElementById('admin-link'); const adminPanel = document.getElementById('admin-panel'); const profileProductsTab = document.getElementById('profile-products-tab');
+            const unauthDiv = document.getElementById('unauth-buttons'); const userInfoDiv = document.getElementById('user-info-header'); const avatar = document.getElementById('user-avatar-small'); const userName = document.getElementById('user-name-small'); const profileDiv = document.getElementById('user-profile'); const authFormDiv = document.getElementById('auth-form'); const profileAvatar = document.getElementById('profile-avatar'); const profileDetails = document.getElementById('profile-details'); const authTitle = document.getElementById('auth-title'); const adminLink = document.getElementById('admin-link'); const adminPanel = document.getElementById('admin-panel'); const profileProductsTab = document.getElementById('profile-products-tab'); const adminPostsLink = document.getElementById('admin-posts-link');
             if (currentUser) {
                 unauthDiv.style.display = 'none'; userInfoDiv.style.display = 'flex'; avatar.textContent = currentUser.firstname.charAt(0).toUpperCase(); userName.textContent = currentUser.firstname === 'Admin' ? 'Admin' : currentUser.firstname; profileDiv.style.display = 'block'; authFormDiv.style.display = 'none'; authTitle.textContent = 'Мой профиль'; profileAvatar.textContent = currentUser.firstname === 'Admin' ? '👑' : currentUser.firstname.charAt(0).toUpperCase();
                 if (currentUser.isAdmin) { 
                     profileDetails.innerHTML = `<div class="profile-field"><strong>👑 Администратор</strong><span>${currentUser.login || currentUser.email}</span></div>`; 
                     adminLink.style.display = 'block'; 
+                    adminPostsLink.style.display = 'inline-flex';
                     adminPanel.style.display = 'block'; 
                     profileProductsTab.style.display = 'block'; 
                     updateTransactionsTable(); 
@@ -1393,6 +1415,7 @@
                 else { 
                     updateProfileDisplay(); 
                     adminLink.style.display = 'none'; 
+                    adminPostsLink.style.display = 'none';
                     adminPanel.style.display = 'none'; 
                     profileProductsTab.style.display = 'none'; 
                     // Показываем кнопку редактирования
@@ -1409,6 +1432,7 @@
                 authFormDiv.style.display = 'block'; 
                 authTitle.textContent = 'Вход / Регистрация'; 
                 adminLink.style.display = 'none'; 
+                adminPostsLink.style.display = 'none';
                 adminPanel.style.display = 'none'; 
             }
         }
